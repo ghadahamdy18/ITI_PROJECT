@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuManager implements IMenuProvider {
+public class MenuManager  {
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public void addMenuItem(MenuItem item) {
@@ -40,7 +40,11 @@ public class MenuManager implements IMenuProvider {
             return;
         }
         for (MenuItem item : menuItems) {
-            System.out.println(item);
+            System.out.println("Name: " + item.getName());
+            System.out.println("Description: " + item.getDescription());
+            System.out.println("Price: $" + item.getPrice());
+            System.out.println("Category: " + item.getCategory());
+            System.out.println("---------------------------");
         }
     }
 
@@ -54,6 +58,11 @@ public class MenuManager implements IMenuProvider {
     }
 
     public void loadMenuFromFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("No saved menu found. Starting with an empty menu.");
+            return;
+        }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             menuItems = (List<MenuItem>) ois.readObject();
             System.out.println("Menu loaded from file.");
@@ -62,8 +71,4 @@ public class MenuManager implements IMenuProvider {
         }
     }
 
-    @Override
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
-    }
 }

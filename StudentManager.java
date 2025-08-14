@@ -14,7 +14,7 @@ public class StudentManager implements IStudentRepository {
         loadStudentsFromFile(); // Load data when system starts
     }
 
-    // FR1.1: Register student
+    //  Register student
     public void registerStudent() {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();

@@ -10,7 +10,7 @@ public class Student implements Serializable {
         this.name = name;
         this.studentId = studentId;
         this.password = password;
-        this.loyaltyPoints = 0; // Default when registering
+        this.loyaltyPoints = 0;
     }
 
     // Getters
