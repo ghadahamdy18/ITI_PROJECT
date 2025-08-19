@@ -15,7 +15,7 @@ public class StudentManager implements IStudentRepository {
     }
 
     //  Register student
-    public void registerStudent() {
+    public Student registerStudent() {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
 
@@ -25,7 +25,7 @@ public class StudentManager implements IStudentRepository {
         // Ensure ID is unique
         if (getStudentById(studentId) != null) {
             System.out.println("Error: Student ID already exists.");
-            return;
+            return null;
         }
 
         System.out.print("Enter password: ");
@@ -34,7 +34,8 @@ public class StudentManager implements IStudentRepository {
         Student newStudent = new Student(name, studentId, password);
         students.add(newStudent);
         saveStudentsToFile();
-        System.out.println("Registration successful.");
+        System.out.println("Registration successful. Welcome " + newStudent.getName() + "!");
+        return newStudent;
     }
 
 

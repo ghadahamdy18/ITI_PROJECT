@@ -2,14 +2,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuManager  {
+public class MenuManager implements IMenuProvider {
     private List<MenuItem> menuItems = new ArrayList<>();
 
+    @Override
     public void addMenuItem(MenuItem item) {
         menuItems.add(item);
         System.out.println(item.getName() + " added.");
     }
 
+    @Override
     public boolean editMenuItem(String name, String newDescription, double newPrice, String newCategory) {
         for (MenuItem item : menuItems) {
             if (item.getName().equalsIgnoreCase(name)) {
@@ -24,6 +26,7 @@ public class MenuManager  {
         return false;
     }
 
+    @Override
     public boolean removeMenuItem(String name) {
         boolean removed = menuItems.removeIf(item -> item.getName().equalsIgnoreCase(name));
         if (removed) {
@@ -34,20 +37,19 @@ public class MenuManager  {
         return removed;
     }
 
+    @Override
     public void displayMenu() {
         if (menuItems.isEmpty()) {
             System.out.println("Menu is empty.");
             return;
         }
         for (MenuItem item : menuItems) {
-            System.out.println("Name: " + item.getName());
-            System.out.println("Description: " + item.getDescription());
-            System.out.println("Price: $" + item.getPrice());
-            System.out.println("Category: " + item.getCategory());
+            System.out.println(item);
             System.out.println("---------------------------");
         }
     }
 
+    @Override
     public void saveMenuToFile(String filePath) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(menuItems);
@@ -57,6 +59,7 @@ public class MenuManager  {
         }
     }
 
+    @Override
     public void loadMenuFromFile(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -71,4 +74,8 @@ public class MenuManager  {
         }
     }
 
+    @Override
+    public List<MenuItem> getAllMenuItems() {
+        return new ArrayList<>(menuItems); // return copy to preserve encapsulation
+    }
 }
